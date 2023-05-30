@@ -41,6 +41,25 @@ fig = px.scatter(
     x='umap_embedding_x', 
     y='umap_embedding_y', 
     color='best_guess_variable', 
+    color_discrete_sequence=[
+                                'red',
+                                'blue',
+                                'black',
+                                'orange',
+                                'purple',
+                                'brown',
+                                'pink',
+                                'gray',
+                                'cyan',
+                                'magenta',
+                                'lime',
+                                'teal',
+                                'olive',
+                                'navy',
+                                'maroon',
+                                'gold',
+                                'green'
+                            ],
     hover_name=dit_logits['filename'].apply(lambda x: x.split('/')[-1])
     )
 fig.update_layout(showlegend=False, margin=dict(l=0, r=0, t=0, b=0))
