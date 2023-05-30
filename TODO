@@ -1,5 +1,6 @@
 * New semantic search with MSMARCO or something similar
 * Deeper name normalization for Person to Person Network
+
 * Dataset explorer - slider for nearest neighbor, inspiration: https://pair-code.github.io/understanding-umap/
 * Dataset explorer - make chart big
 * Dataset explorer - color stuff
