@@ -11,7 +11,7 @@ def get_data():
     # sem search index
     fl_index_url = 'https://drive.google.com/drive/folders/1BAJNUpOOVCYHsjoQUf_zv5yipOFfldZU?usp=sharing'
     fl_index_out = 'data/fl_index'
-    gdown.download_folder(fl_index_url, fl_index_out, quiet=True, use_cookies=False)
+    gdown.download_folder(url=fl_index_url, output=fl_index_out, quiet=True, use_cookies=False)
     # lookup data for threads
     metadata_for_threads_url = 'https://drive.google.com/file/d/11axKr60BUpe3nJW69RElIOa4CqHrSi2r/view?usp=sharing'
     metadata_for_threads_out = 'data/metadata_for_threads.csv'
