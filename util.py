@@ -6,14 +6,15 @@ import gdown
 def get_data():
     # dit logits
     dit_logits_url = 'https://drive.google.com/file/d/1ICc_RtUcZYZrZUndLHAVWLk5MK3P5xic/view?usp=sharing'
-    dit_logits_out = 'dit_logits_embedded.csv'
+    dit_logits_out = 'data/dit_logits_embedded.csv'
     gdown.download(dit_logits_url, dit_logits_out, quiet=True, fuzzy=True)
     # sem search index
     fl_index_url = 'https://drive.google.com/drive/folders/1BAJNUpOOVCYHsjoQUf_zv5yipOFfldZU?usp=sharing'
-    gdown.download_folder(fl_index_url, quiet=True, use_cookies=False)
+    fl_index_out = 'data/fl_index'
+    gdown.download_folder(fl_index_url, fl_index_out, quiet=True, use_cookies=False)
     # lookup data for threads
     metadata_for_threads_url = 'https://drive.google.com/file/d/11axKr60BUpe3nJW69RElIOa4CqHrSi2r/view?usp=sharing'
-    metadata_for_threads_out = 'metadata_for_threads.csv'
+    metadata_for_threads_out = 'data/metadata_for_threads.csv'
     gdown.download(metadata_for_threads_url, metadata_for_threads_out, quiet=True, fuzzy=True)
     return None
 
