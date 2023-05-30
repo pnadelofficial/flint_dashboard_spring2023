@@ -1,0 +1,5 @@
+data/dit_logits.csv
+data/dit_logits_embedded.csv
+data/fl_index
+data/lookup_data_for_threads.csv
+data/metadata_for_threads.csv
