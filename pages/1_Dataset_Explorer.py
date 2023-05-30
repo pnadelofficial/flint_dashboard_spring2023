@@ -43,7 +43,7 @@ fig = px.scatter(
     color='best_guess_variable', 
     hover_name=dit_logits['filename'].apply(lambda x: x.split('/')[-1])
     )
-fig.update_layout(showlegend=False)
+fig.update_layout(showlegend=False, margin=dict(l=0, r=0, t=0, b=0))
 fig.update_xaxes(visible=False)
 fig.update_yaxes(visible=False)
 
