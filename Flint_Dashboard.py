@@ -1,4 +1,6 @@
 import streamlit as st 
+from util import get_data
+get_data()
 
 st.title("Flint Dashboard")
 st.write("Lorem Ipsum")
