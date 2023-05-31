@@ -16,14 +16,14 @@ email_threads, metadata = get_data()
 
 st.title("Visualizing Email Threads")
 st.write("""
-    Once we understood the make up of our data, we selected just the emails and sought to reconstruct
+    Once we understood the makeup of our data, we selected just the emails and sought to reconstruct
     the connections between them. Below you can see how individual email conversations develop over time.
     **Hover over nodes in the network graph to see details.**
     """)
 
 with st.expander('Read more'):
         st.markdown("""
-            Caleb Pekowsky took on the difficult task on reconstructing email threads. After many attempts,
+            Caleb Pekowsky took on the difficult task of reconstructing email threads. After many attempts,
             he was able to create the structure below by using the pagination at the bottom of each page
             in the FOIA response. Each email thread began with a pagination of 1 and continued until the pagination 
             reset to 1 and the thread ended. Although helpful, this process only returned a list of images which 

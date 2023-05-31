@@ -10,7 +10,7 @@ st.title("Flint Node of Interest Subgraph")
 st.write(
     """
     Because the FOIA response rendered the emails as images, we lost all ability to extract metadata fields,
-    like the sender and the recipient. On top of this, errora from Optical Character Recognition (OCR) made
+    like the sender and the recipient. On top of this, errors from Optical Character Recognition (OCR) made
     rules-based systems impractical. To confront this problem, a Named Entity Recognition (NER) model, which 
     was able to extract these details, was trained. Afterwards, Kirin arranged this data
     into a Person to Person network. Below, **you can choose from a pre-defined list of 10 names in a dropdown 
@@ -28,7 +28,7 @@ with st.expander('Read more'):
         token-level embeddings which can be used to predict whether or not a token is a part of a type of entity.
         In our case, the entity types were each metadata field that we wanted to extract from an email. Once we
         had a model working well, Kirin was able to create a network representation of the Flint emails dataset.
-        In this network, each node is a person and an edge exists between two nodes if thsoe two people ever 
+        In this network, each node is a person and an edge exists between two nodes if those two people ever 
         exchanged emails. 
         """)
 

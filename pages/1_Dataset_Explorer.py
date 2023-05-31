@@ -16,9 +16,9 @@ st.write("""
 """)
 with st.expander('Read more'):
         st.markdown("""
-            Researchers often lack tools for organizing and managing large datasets. Especially in the case of images,
-            these datasets can contain a wide variety of documents some of which are well suited for downstream analysis,
-            others are not. The first step of working with the Flint emails dataset was to quikcly assertain what types
+            Researchers often lack tools for organizing and managing large datasets. Especially in the case of images, 
+            these datasets can contain a wide variety of documents, some of which are well-suited for downstream analysis 
+            and others not. The first step of working with the Flint emails dataset was to quickly ascertain what types
             of documents it even contained. Below, you can use an app developed by Gabe Mogollon to navigate through
             the images that make up the Flint emails dataset.\
             Gabe applied [Microsoft's Document Image Transformer (DiT)](https://huggingface.co/docs/transformers/model_doc/dit)

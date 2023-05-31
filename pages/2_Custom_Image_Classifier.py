@@ -13,19 +13,19 @@ classifier = get_data()
 
 st.title("Custom Image Classifier")
 st.write("""
-    After a first pass with Microsoft's DiT (Dataset Explorer), we fine-tuned several models, including DiT,
+    After a first pass with Microsoft's DiT (Dataset Explorer), we fine-tuned two other models (ViT and Donut),
     to recognize six Flint-specific document classes for which we manually tagged over 5000 examples. Below,
     you can either **use one of our example images** or **upload any image from your computer and run it 
     thorugh our fine-tuned classifier**. 
 """)
 with st.expander('Read more'):
         st.markdown("""
-            Though the dataset explorer helps researchers what types of data they are working with, it does not
+            Though the dataset explorer helps researchers understand what types of data they are working with, it does not
             solve the problem of having too many document classes. Instead, in the case of the Flint emails dataset,
             it helped us determine what document classes we should focus on for fine-tuning. Specifically, Ken 
             Stephens determined what relevant document classes and manually tagged about 4000 images. With this 
-            labelled data, Ken then trained several models on two base models DiT and [ViT](https://huggingface.co/google/vit-base-patch16-224).
-            On this page is [the most successful model](https://huggingface.co/Kevin-M-Smith/vit_900_900_5000).
+            labeled data, Ken then trained several models on two base models [Donut](https://github.com/clovaai/donut) and [ViT](https://huggingface.co/google/vit-base-patch16-224).
+            On this page is [the most successful model](https://huggingface.co/Kevin-M-Smith/vit_900_900_5000) based on ViT.
             See below for some explanatory visuals.
             """)
         st.image(Image.open('conmat_flint.png'),caption='Finetuned ViT model Confusion Matrix')

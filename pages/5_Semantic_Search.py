@@ -48,9 +48,9 @@ def display_text(tup, context=1):
 
 st.title('Semantic Search')
 st.write("""
-    Semantic search provides a vital tool for researcher working with large bodies of text. Each document is encoded
+    Semantic search provides a vital tool for researchers working with large bodies of text. Each document is encoded
     using pretrained text-based transformer models, producing a vector which represents the linguistic features of that
-    document. A search query is the encoded in the same way and then the search query vector is compared to each document 
+    document. A search query is then encoded in the same way and then the search query vector is compared to each document 
     embedding using cosine similarity. Documents with the highest score are presented as the results of the search. Below,
     **input any search and see what documents from the Flint emails dataset come up.** 
 """)
