@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import streamlit as st
 import gdown
 
-@st.cache_resource
+@st.cache_data
 def get_data():
     # dit logits
     dit_logits_url = 'https://drive.google.com/file/d/1ICc_RtUcZYZrZUndLHAVWLk5MK3P5xic/view?usp=sharing'

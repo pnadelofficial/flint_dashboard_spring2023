@@ -11,7 +11,7 @@ pio.templates.default = "plotly"
 st.title('Dataset Explorer')
 st.write("""
             Below, you can navigate through [a document classification model](https://huggingface.co/docs/transformers/model_doc/dit)'s 
-            predictions on the Flint emails dataset and see where the model does well and where it fails.\
+            predictions on the Flint emails dataset and see where the model does well and where it fails.
             **Click on any point in the chart below to see the image associated with it.**
 """)
 with st.expander('Read more'):
