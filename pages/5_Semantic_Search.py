@@ -7,7 +7,7 @@ from txtai.embeddings import Embeddings
 @st.cache_resource
 def get_data():
     embeddings = Embeddings()
-    embeddings.load('./data/fl_index622023') # can change
+    embeddings.load('./data/fl_index') # can change
 
     fl_sents = pd.read_csv('./data/fl_sents.csv')
     dataset = load_dataset("pnadel/michgovparsed8_16")
