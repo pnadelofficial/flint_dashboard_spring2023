@@ -1,49 +1,55 @@
 import streamlit as st
 import pandas as pd
-from datasets import load_dataset
-import ast
+import numpy as np
 from txtai.embeddings import Embeddings
+from ast import literal_eval
+from streamlit_image_select import image_select
 
 @st.cache_resource
 def get_data():
     embeddings = Embeddings()
-    embeddings.load('./data/fl_index') # can change
+    embeddings.load('./data/fl_index6122023') # can change
 
-    fl_sents = pd.read_csv('./data/fl_sents.csv')
-    dataset = load_dataset("pnadel/michgovparsed8_16")
-    df = dataset['train'].to_pandas()
-    for col in ['From', 'Sent', 'To', 'Cc', 'Subject', 'Attachment']:
-        df[col] = df[col].apply(ast.literal_eval)
-    fl_ref = df.copy()
-    del df
-    return embeddings, fl_sents, fl_ref
-embeddings, fl_sents, fl_ref = get_data()
+    # fl_sents = pd.read_csv('./data/fl_sents.csv')
+    # dataset = load_dataset("pnadel/michgovparsed8_16")
+    # df = dataset['train'].to_pandas()
+    # for col in ['From', 'Sent', 'To', 'Cc', 'Subject', 'Attachment']:
+    #     df[col] = df[col].apply(ast.literal_eval)
+    # fl_ref = df.copy()
+    # del df
 
-def display_text(tup, context=1):
-    selection = fl_ref.iloc[fl_sents.org_idx[tup[0]]]
-    st.markdown(f"<small style='text-align: right;'>From: <b>{selection.From[0][0] if len(selection.From)>0 else 'No sender found'}</b></small>",unsafe_allow_html=True)
-    st.markdown(f"<small style='text-align: right;'>To: <b>{selection.To[0][0] if len(selection.To)>0 else 'No recipient found'}</b></small>",unsafe_allow_html=True)
-    st.markdown(f"<small style='text-align: right;'>Cc: <b>{selection.Cc[0][0] if len(selection.Cc)>0 else 'No Cc found'}</b></small>",unsafe_allow_html=True)
-    st.markdown(f"<small style='text-align: right;'>Date: <b>{selection.Sent[0][0] if len(selection.Sent)>0 else 'No date found'}</b></small>",unsafe_allow_html=True)
-    st.markdown(f"<small style='text-align: right;'>Subject: <b>{selection.Subject[0][0] if len(selection.Subject)>0 else 'No subject found'}</b></small>",unsafe_allow_html=True)
+    metadata = pd.read_csv('./data/michgov6122023.csv').dropna(subset='Body').reset_index(drop=True)
+    for col in ['To', 'Cc']:
+        metadata[col] = metadata[col].apply(literal_eval)
+
+    dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
+
+    return embeddings, metadata, dit_logits
+embeddings, metadata, dit_logits = get_data()
+
+def lookup_image(page):
+    return dit_logits.aws_path.loc[dit_logits.aws_path.str.contains(page.split('.')[0])].iloc[0]
+
+def display_text(tup):
+    selection = metadata.iloc[tup[0]]
+    st.markdown(f"<small style='text-align: right;'>From: <b>{selection.From if selection.From is not np.nan else 'No sender found'}</b></small>",unsafe_allow_html=True)
+    st.markdown(f"<small style='text-align: right;'>To: <b>{selection.To[0] if len(selection.To)>0 else 'No recipient found'}</b></small>",unsafe_allow_html=True)
+    st.markdown(f"<small style='text-align: right;'>Cc: <b>{selection.Cc[0] if len(selection.Cc)>0 else 'No Cc found'}</b></small>",unsafe_allow_html=True)
+    st.markdown(f"<small style='text-align: right;'>Date: <b>{selection.Sent if selection.Sent is not np.nan else 'No date found'}</b></small>",unsafe_allow_html=True)
+    st.markdown(f"<small style='text-align: right;'>Subject: <b>{selection.Subject if selection.Subject is not np.nan else 'No subject found'}</b></small>",unsafe_allow_html=True)
     st.markdown(f"<small style='text-align: right;'>Similarity score: <b>{round(tup[1], 3)}</b></small>",unsafe_allow_html=True)
 
-    res = fl_sents.sents[tup[0]]
-    res = f"<span style='background-color:#fdd835'>{res}</span>"
-
-    before, after = [], []
-    for i in range(context+1):
-        if i != 0:
-            if fl_sents.org_idx[tup[0]-i] == fl_sents.org_idx[tup[0]]:
-                before.append(fl_sents.sents[tup[0]-i])
-            if fl_sents.org_idx[tup[0]+i] == fl_sents.org_idx[tup[0]]:
-                after.append(fl_sents.sents[tup[0]+i] )
+    thread_id = selection.thread_index
+    pages_to_show = metadata.iloc[metadata.groupby('thread_index').groups[thread_id]].image_lookup.unique()
+    images_to_show = [lookup_image(page) for page in pages_to_show]
     
-    before = '\n'.join(before)
-    after  = '\n'.join(after )
-    to_display = '\n'.join([before,res,after]).replace('$', '\$').replace('`', '\`')
+    if len(images_to_show) > 2:
+        img_select = image_select("See the images in this thread", images_to_show, captions=[cap.split('/')[-1] for cap in images_to_show])
+        if img_select:
+                st.image(img_select, width=420)
+    else:
+        st.image(images_to_show[0], caption=images_to_show[0].split('/')[-1])
 
-    st.markdown(to_display,unsafe_allow_html=True)
     st.markdown("<hr style='width: 75%;margin: auto;'>",unsafe_allow_html=True)
 
 st.title('Semantic Search')
@@ -68,13 +74,12 @@ with st.expander('Read more'):
 
 query = st.text_input('Search any query')
 results = st.number_input(value=5, label='Choose the amount of results you want to see')
-context = st.number_input(value=1, label='Choose a context size')
 
 uids = embeddings.search(query, results)
 
 if query != '':
     for tup in uids:
-        display_text(tup, context)
+        display_text(tup)
 
 st.markdown('<small>This tool is for educational purposes ONLY!</small>', unsafe_allow_html=True)
 st.markdown('<small>Assembled by Peter Nadel | TTS Research Technology</small>', unsafe_allow_html=True)
