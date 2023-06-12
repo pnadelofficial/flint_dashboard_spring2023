@@ -16,6 +16,10 @@ def get_data():
     metadata_for_threads_url = 'https://drive.google.com/file/d/11axKr60BUpe3nJW69RElIOa4CqHrSi2r/view?usp=sharing'
     metadata_for_threads_out = 'data/metadata_for_threads.csv'
     gdown.download(metadata_for_threads_url, metadata_for_threads_out, quiet=True, fuzzy=True)
+    # https://drive.google.com/file/d/12qc8yYmX0sEt_1aHShboR3-rOCGcP4KK/view?usp=sharing
+    metadata_for_threads_url = 'https://drive.google.com/file/d/12qc8yYmX0sEt_1aHShboR3-rOCGcP4KK/view?usp=sharing'
+    metadata_for_threads_out = 'data/michgov6122023.csv'
+    gdown.download(metadata_for_threads_url, metadata_for_threads_out, quiet=True, fuzzy=True)
     return None
 
 def plot_network(G, title):
