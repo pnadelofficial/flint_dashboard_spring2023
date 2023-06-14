@@ -9,12 +9,9 @@ def get_images():
         dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
         aws_paths = dit_logits.aws_path
         del dit_logits
+        st.session_state['image_sample'] = list(aws_paths.sample(8))
         return aws_paths 
 aws_paths = get_images()
-
-def set_images():
-        st.session_state['image_sample'] = list(aws_paths.sample(8))
-set_images()
 
 st.title("The Network Language Toolkit Visual Dashboard: Showcasing Student Work")
 st.write("""
