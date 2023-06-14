@@ -9,8 +9,8 @@ def get_data():
     dit_logits_out = 'data/dit_logits_embedded.csv'
     gdown.download(dit_logits_url, dit_logits_out, quiet=True, fuzzy=True)
     # sem search index
-    fl_index_url = 'https://drive.google.com/drive/folders/1v3Usr1WbkcDFRUoZnj716JU_Q-KDqbbE?usp=sharing'
-    fl_index_out = 'data/fl_index6122023'
+    fl_index_url = 'https://drive.google.com/drive/folders/1m9JjTduhc9QEcGISKWUA9Qo8LnW0F9P4?usp=sharing'
+    fl_index_out = 'data/fl_index6132023'
     gdown.download_folder(url=fl_index_url, output=fl_index_out, quiet=True, use_cookies=False)
     # lookup data for threads
     metadata_for_threads_url = 'https://drive.google.com/file/d/11axKr60BUpe3nJW69RElIOa4CqHrSi2r/view?usp=sharing'
