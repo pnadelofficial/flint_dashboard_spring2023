@@ -12,7 +12,6 @@ def get_images():
         return aws_paths 
 aws_paths = get_images()
 
-@st.cache_resource
 def set_images():
         st.session_state['image_sample'] = list(aws_paths.sample(8))
 set_images()
