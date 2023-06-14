@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from txtai.embeddings import Embeddings
+from thefuzz import fuzz
 from ast import literal_eval
 from streamlit_image_select import image_select
 
 @st.cache_resource
 def get_data():
     embeddings = Embeddings()
-    embeddings.load('./data/fl_index6122023') # can change
+    embeddings.load('./data/fl_index6132023') # can change
 
     # fl_sents = pd.read_csv('./data/fl_sents.csv')
     # dataset = load_dataset("pnadel/michgovparsed8_16")
@@ -21,17 +22,32 @@ def get_data():
     metadata = pd.read_csv('./data/michgov6122023.csv').dropna(subset='Body').reset_index(drop=True)
     for col in ['To', 'Cc']:
         metadata[col] = metadata[col].apply(literal_eval)
+    
+    sents = pd.read_csv('./data/fl_sents6132023.csv')
 
     dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
 
-    return embeddings, metadata, dit_logits
-embeddings, metadata, dit_logits = get_data()
+    return embeddings, metadata, dit_logits, sents
+embeddings, metadata, dit_logits, sents = get_data()
 
 def lookup_image(page):
     return dit_logits.aws_path.loc[dit_logits.aws_path.str.contains(page.split('.')[0])].iloc[0]
 
+def remove_duplicates(strings):
+    unique_strings = []
+    for string in strings:
+        is_dup = False
+        for unique in unique_strings:
+            fuzz_score = fuzz.ratio(string[0], unique[0])
+            if fuzz_score >= 90:
+                is_dup = True
+                break
+        if not is_dup:
+            unique_strings.append(string)
+    return unique_strings
+    
 def display_text(tup):
-    selection = metadata.iloc[tup[0]]
+    selection = metadata.iloc[sents.iloc[tup[0]].org_index]
     st.markdown(f"<small style='text-align: right;'>From: <b>{selection.From if selection.From is not np.nan else 'No sender found'}</b></small>",unsafe_allow_html=True)
     st.markdown(f"<small style='text-align: right;'>To: <b>{selection.To[0] if len(selection.To)>0 else 'No recipient found'}</b></small>",unsafe_allow_html=True)
     st.markdown(f"<small style='text-align: right;'>Cc: <b>{selection.Cc[0] if len(selection.Cc)>0 else 'No Cc found'}</b></small>",unsafe_allow_html=True)
@@ -75,10 +91,13 @@ with st.expander('Read more'):
 query = st.text_input('Search any query')
 results = st.number_input(value=5, label='Choose the amount of results you want to see')
 
-uids = embeddings.search(query, results)
+uids = embeddings.search(query, results+100)
+strings = [(sents.iloc[uid[0]].Body, uid[0], uid[1]) for uid in uids]
+unique_strings = remove_duplicates(strings)[:results]
+new_uids = [(u[1], u[2]) for u in unique_strings]
 
 if query != '':
-    for tup in uids:
+    for tup in new_uids:
         display_text(tup)
 
 st.markdown('<small>This tool is for educational purposes ONLY!</small>', unsafe_allow_html=True)

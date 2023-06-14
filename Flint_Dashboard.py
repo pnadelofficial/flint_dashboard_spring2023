@@ -24,7 +24,7 @@ st.subheader("""
 st.write("""
         For this project, we are investigating a large repository of emails concerning the Flint water
         crisis made available through the Freedom of Information Act (FoIA). These emails, sent between 
-        member of then-Governor Rick Snyder's executive office, the Michigan State Police (MSP), and 
+        members of then-Governor Rick Snyder's executive office, the Michigan State Police (MSP), and 
         members of the Environmental Protection Agency (EPA), constitute a dynamic social network, which 
         grows in complexity over time. Using the Flint emails as an example, this semester, we began to 
         create a series of tools for researchers in the social sciences and humanities to better grasp 
@@ -39,10 +39,9 @@ st.write("""
         printed email threads, attachments and handwritten documents. The original realeases can be found
         on archive.org, here: [Michigan Government/State Police](https://archive.org/details/snyder_flint_emails/Staff_1/),
         [EPA](https://archive.org/details/epa-flint-documents/page/n3/mode/2up). Though these data are 
-        publically available, they remain practically inaccessible given their size and lack of context. In
-        order to shrink this gap between what is available and what is accessible we propose the tool
-        enumerated in this dashboard. Below you can find an image gallery of examples from the dataset.
-        Click on 'Resample images' to see another set of eight examples.
+        publically available, they remain practically inaccessible given their size and ____. In order to shrink 
+        this gap between what is available and what is accessible we propose the tools enumerated in this dashboard. 
+        Below you can find an image gallery of examples from the dataset. Click on 'Resample images' to see another set of eight examples.
         """)
 
 if st.button('Resample images'):
@@ -62,7 +61,7 @@ st.write("""
         original metadata. For instance, as explained further in *Person to Person Networks*, we extracted 
         from each email a sender, a recipient, a date, any CC'd individuals, a subject and the name of any
         attachments. This metadata, an expectation for any downstream analysis, is unavailble without signficant 
-        effort. Thus, we sought to assembles a series of tools whihc researchers could choose from to fit their
+        effort. Thus, we sought to assemble a series of tools which researchers could choose from to fit their
         dataset and research questions. 
         """)
 
