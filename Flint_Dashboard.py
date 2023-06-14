@@ -47,12 +47,15 @@ st.write("""
         this gap between what is available and what is accessible we propose the tools enumerated in this dashboard. 
         Below you can find an image gallery of examples from the dataset. Click on 'Resample images' to see another set of eight examples.
         """)
-        
+
 if st.button('Resample images'):
         st.session_state['image_sample'] = list(aws_paths.sample(8))
-img_select = image_select("Select an example image to see it in more detail", st.session_state['image_sample'], captions=[cap.split('/')[-1] for cap in st.session_state['image_sample']])
-if img_select:
-        st.image(img_select, width=420)
+try:
+        img_select = image_select("Select an example image to see it in more detail", st.session_state['image_sample'], captions=[cap.split('/')[-1] for cap in st.session_state['image_sample']])
+        if img_select:
+                st.image(img_select, width=420)
+except:
+        st.session_state['image_sample'] = list(aws_paths.sample(8))
 
 st.subheader("""
             Challenges in using the data
