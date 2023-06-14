@@ -8,7 +8,6 @@ get_data()
 def get_images():
     dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
     aws_paths = dit_logits.aws_path
-    st.session_state['image_sample'] = list(aws_paths.sample(8))
     return aws_paths 
 aws_paths = get_images()
 
@@ -44,6 +43,7 @@ st.write("""
         Below you can find an image gallery of examples from the dataset. Click on 'Resample images' to see another set of eight examples.
         """)
 
+st.session_state['image_sample'] = list(aws_paths.sample(8))
 if st.button('Resample images'):
         st.session_state['image_sample'] = list(aws_paths.sample(8))
 img_select = image_select("Select an example image to see it in more detail", st.session_state['image_sample'], captions=[cap.split('/')[-1] for cap in st.session_state['image_sample']])
