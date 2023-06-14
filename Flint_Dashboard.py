@@ -8,6 +8,7 @@ get_data()
 def get_images():
         dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
         aws_paths = dit_logits.aws_path
+        del dit_logits
         return aws_paths 
 aws_paths = get_images()
 
@@ -47,15 +48,12 @@ st.write("""
         this gap between what is available and what is accessible we propose the tools enumerated in this dashboard. 
         Below you can find an image gallery of examples from the dataset. Click on 'Resample images' to see another set of eight examples.
         """)
-
+        
 if st.button('Resample images'):
         st.session_state['image_sample'] = list(aws_paths.sample(8))
-try:
-        img_select = image_select("Select an example image to see it in more detail", st.session_state['image_sample'], captions=[cap.split('/')[-1] for cap in st.session_state['image_sample']])
-        if img_select:
-                st.image(img_select, width=420)
-except:
-        st.session_state['image_sample'] = list(aws_paths.sample(8))
+img_select = image_select("Select an example image to see it in more detail", st.session_state['image_sample'], captions=[cap.split('/')[-1] for cap in st.session_state['image_sample']])
+if img_select:
+        st.image(img_select, width=420)
 
 st.subheader("""
             Challenges in using the data
