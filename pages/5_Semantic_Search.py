@@ -26,13 +26,13 @@ def get_data():
     
     sents = pd.read_csv('./data/fl_sents6132023.csv')
 
-    dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
+    #dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
 
-    return embeddings, metadata, dit_logits, sents, sentence_encoder, query_encoder, tokenizer
-embeddings, metadata, dit_logits, sents, sentence_encoder, query_encoder, tokenizer = get_data()
+    return embeddings, metadata, sents, sentence_encoder, query_encoder, tokenizer
+embeddings, metadata, sents, sentence_encoder, query_encoder, tokenizer = get_data()
 
-def lookup_image(page):
-    return dit_logits.aws_path.loc[dit_logits.aws_path.str.contains(page.split('.')[0])].iloc[0]
+# def lookup_image(page):
+#     return dit_logits.aws_path.loc[dit_logits.aws_path.str.contains(page.split('.')[0])].iloc[0]
 
 def remove_duplicates(strings):
     unique_strings = []
