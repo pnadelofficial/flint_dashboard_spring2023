@@ -28,8 +28,8 @@ def get_data():
 
     dit_logits = pd.read_csv('./data/dit_logits_embedded.csv').drop(['Unnamed: 0'], axis=1)
 
-    return embeddings, metadata, sents, sentence_encoder, query_encoder, tokenizer, dit_logits
-embeddings, metadata, sents, sentence_encoder, query_encoder, tokenizer, dit_logits = get_data()
+    return embeddings, metadata, sents, dit_logits
+embeddings, metadata, sents, dit_logits = get_data()
 
 def lookup_image(page):
     return dit_logits.aws_path.loc[dit_logits.aws_path.str.contains(page.split('.')[0])].iloc[0]
